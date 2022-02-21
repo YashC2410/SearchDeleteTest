@@ -1,4 +1,4 @@
-package com.searchservice.test.service;
+package com.searchservice.test1.service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,6 +22,7 @@ public class SearchServiceTest {
 	public boolean insertDeleteRecord(int clientId, String tableName) {
 		boolean success = false;
 		System.out.println("Adding Record For Client ID: "+clientId);
+		if((clientId>0) && (tableName!=null)) {
 	      try {
 	    	 FileWriter recordWriter = new FileWriter("src\\main\\resources\\DeleteRecord.txt",true);
 	    	 String newRecord = String.format("%0$s %18s %20s", clientId,tableName,formatter.format(Calendar.getInstance().getTime()))+"\n";
@@ -33,6 +34,7 @@ public class SearchServiceTest {
 	         success = true;
 		} catch (IOException e) {
 			System.out.println("Adding Record Failed Due to Exceptions");
+		}
 		}
 	      return success;
 	}
@@ -86,7 +88,6 @@ public class SearchServiceTest {
 	        pw.flush();
 	        pw.close();
 	        br.close();
-	        
 	        existingDeleteFile.delete();
 	        File deleteRecordFile = new File("src\\main\\resources\\DeleteRecord.txt");
 	        newDeleteFile.renameTo(deleteRecordFile);
@@ -104,8 +105,7 @@ public class SearchServiceTest {
 		return success;
 	}
 	
-	public boolean deleteOperation() {
-		boolean success = false;
+	public int deleteOperation() {
 		System.out.println("Checking For Records With Request Time Equal to or More than 15 days");
 		File existingFile = new File("C:\\Users\\user\\Documents\\DeleteRecord.txt");
 		File newFile = new File("C:\\Users\\user\\Documents\\DeleteRecordTemp.txt");
@@ -157,15 +157,16 @@ public class SearchServiceTest {
 		        else {
 		        	System.out.println("No Records Were Found and Deleted");
 		        }
-		        success = true;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			deleteRecordCount = -1;
 		} catch (IOException e) {
 			e.printStackTrace();
+			deleteRecordCount = -1;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			deleteRecordCount = -1;
 		}
-		return success;
+		return deleteRecordCount;
 	}
 	
 }

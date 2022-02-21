@@ -1,4 +1,4 @@
-package com.searchservice.test;
+package com.searchservice.test1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
